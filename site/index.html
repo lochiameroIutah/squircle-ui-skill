@@ -1343,13 +1343,13 @@
           const rect = borderBadCard.getBoundingClientRect();
           const w = Math.round(rect.width);
           const h = Math.round(rect.height);
-          makeClipPath("sq-border-bad", w, h, 28, 1.0);
+          makeClipPath("sq-border-bad", w, h, 28, 0.6);
           borderBadCard.dataset.sqId = "sq-border-bad";
         }
         const borderBadBtn = document.getElementById("border-bad-btn");
         if (borderBadBtn) {
           const rect = borderBadBtn.getBoundingClientRect();
-          makeClipPath("sq-border-bad-btn", Math.round(rect.width), Math.round(rect.height), 8, 1.0);
+          makeClipPath("sq-border-bad-btn", Math.round(rect.width), Math.round(rect.height), 8, 0.6);
           borderBadBtn.dataset.sqId = "sq-border-bad-btn";
         }
 
@@ -1363,13 +1363,13 @@
           const outerRect = borderGoodOuter.getBoundingClientRect();
           const ow = Math.round(outerRect.width);
           const oh = Math.round(outerRect.height);
-          makeClipPath("sq-border-good-outer", ow, oh, 28, 1.0);
+          makeClipPath("sq-border-good-outer", ow, oh, 28, 0.6);
           borderGoodOuter.dataset.sqId = "sq-border-good-outer";
 
           // Inner = outer minus 1.5px padding on each side
           const iw = Math.max(ow - 3, 10);
           const ih = Math.max(oh - 3, 10);
-          makeClipPath("sq-border-good-inner", iw, ih, 26.5, 1.0);
+          makeClipPath("sq-border-good-inner", iw, ih, 26.5, 0.6);
           borderGoodInner.dataset.sqId = "sq-border-good-inner";
         }
         // Button inside clean card: outer yellow squircle with 1px padding, inner dark squircle
@@ -1379,12 +1379,12 @@
           const boRect = btnGoodOuter.getBoundingClientRect();
           const bow = Math.round(boRect.width);
           const boh = Math.round(boRect.height);
-          makeClipPath("sq-border-good-btn-outer", bow, boh, 8, 1.0);
+          makeClipPath("sq-border-good-btn-outer", bow, boh, 8, 0.6);
           btnGoodOuter.dataset.sqId = "sq-border-good-btn-outer";
 
           const biw = Math.max(bow - 2, 8);
           const bih = Math.max(boh - 2, 8);
-          makeClipPath("sq-border-good-btn-inner", biw, bih, 7, 1.0);
+          makeClipPath("sq-border-good-btn-inner", biw, bih, 7, 0.6);
           btnGoodInner.dataset.sqId = "sq-border-good-btn-inner";
         }
 
