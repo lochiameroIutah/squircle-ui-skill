@@ -1,28 +1,28 @@
 # squircle-ui
 
-Una Claude Code skill per usare [`@squircle-js/react`](https://squircle.js.org) come default al posto di `border-radius` / `rounded-*` di Tailwind nelle UI React.
+A Claude Code skill that makes [`@squircle-js/react`](https://squircle.js.org) the default for rounded UI in React, replacing `border-radius` / Tailwind's `rounded-*`.
 
-## Perché esiste
+## Why this exists
 
-Credo che gli squircle potrebbero armonizzare di più la vita digitale con il mondo reale.
+I believe squircles could harmonize digital life with the real world a little more.
 
-Gli angoli del software sono quasi tutti archi di cerchio — `border-radius` del CSS, che salta di colpo dal lato dritto alla curva (continuità G1). Nel mondo fisico, gli oggetti che maneggiamo ogni giorno — un sasso levigato dal fiume, una saponetta consumata, un iPhone — hanno curve che si raccordano in modo continuo (G2). Non spigoli, non transizioni nette: passaggi morbidi.
+Almost every corner in software is a circular arc — CSS `border-radius` — which jumps abruptly from the straight edge into the curve (G1 continuity). In the physical world, the objects we handle every day — a stone polished by a river, a worn bar of soap, an iPhone — have curves that blend continuously (G2). No corners, no abrupt seams: smooth transitions.
 
-Apple lo sa dal 2013, quando ha sostituito gli arrotondamenti delle app icon iOS con una **superellipse**. Da allora ogni interfaccia premium che ti sembra "fatta bene" probabilmente sta usando squircle senza che tu te ne accorga.
+Apple has known this since 2013, when the iOS app-icon mask was replaced with a **superellipse**. Ever since, most "premium-feeling" interfaces are quietly using squircles without you noticing.
 
-Questa skill rende quel default automatico per chi costruisce UI con Claude Code.
+This skill turns that into the default for anyone building UI with Claude Code.
 
-## Cosa fa
+## What it does
 
-Quando attiva, Claude usa `<Squircle>` / `<StaticSquircle>` con `cornerSmoothing: 0.6` (preset Apple/iOS) al posto di `rounded-xl`, `rounded-2xl` ecc. su bottoni, card, avatar, hero image, app icon.
+When active, Claude uses `<Squircle>` / `<StaticSquircle>` with `cornerSmoothing: 0.6` (the Apple/iOS preset) in place of `rounded-xl`, `rounded-2xl`, etc., on buttons, cards, avatars, hero images, and app icons.
 
-Sono inclusi:
-- API reale di `@squircle-js/react` (props, `asChild`)
-- Scala consigliata di `cornerRadius` per ogni tipo di elemento
-- 7 pattern copia-incollabili (bottone, card, avatar, hero, app icon iOS, Framer Motion, bordo)
-- Regola anti-blob per elementi piccoli
-- Tabella errori comuni
-- Eccezioni dove restare su CSS standard (`rounded-full` per cerchi veri, input piccoli)
+Inside:
+- Real `@squircle-js/react` API (props, `asChild`)
+- A recommended `cornerRadius` scale per element type
+- 7 copy-paste patterns (button, card, avatar, hero, iOS app icon, Framer Motion, border)
+- Anti-blob rule for small elements
+- Common-mistakes table
+- Exceptions that stay on plain CSS (`rounded-full` for true circles, small inputs)
 
 ## Install
 
@@ -32,11 +32,11 @@ cd ~/.claude/skills
 git clone https://github.com/lochiameroIutah/squircle-ui-skill.git squircle-ui
 ```
 
-Da quel momento Claude Code la scopre automaticamente.
+Claude Code will auto-discover the skill from that point on.
 
-## Forzare l'uso come default
+## Forcing it as your default
 
-La skill viene attivata se il tuo prompt contiene trigger come "squircle", "stile iOS", "Apple". Per renderla **default** anche quando dici solo "fammi una card", aggiungi un file di memoria personale in `~/.claude/projects/<tuo-progetto>/memory/` che istruisca Claude a invocarla al posto di `rounded-*`. (Esempio nel file `feedback_squircle_default.md` di esempio incluso.)
+The skill activates when your prompt contains triggers like "squircle", "iOS style", "Apple feel". To make it the **default** even when you only say "build me a card", add a personal memory file under `~/.claude/projects/<your-project>/memory/` instructing Claude to invoke it instead of `rounded-*`.
 
 ## License
 
