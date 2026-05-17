@@ -126,10 +126,11 @@
       top: 60px;
       left: 50%;
       transform: translateX(-50%);
-      width: 700px;
+      width: min(700px, 100vw);
       height: 300px;
       background: radial-gradient(ellipse at center, rgba(255,251,0,0.07) 0%, transparent 70%);
       pointer-events: none;
+      overflow: hidden;
     }
 
     .hero h1 {
@@ -329,6 +330,161 @@
       color: var(--white-48);
       letter-spacing: -0.1px;
       margin-top: 4px;
+    }
+
+    /* --- AUTO-SCALE SHOWCASE --- */
+    .scale-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 24px;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      /* Contain the scroll within the section so the body never widens */
+      max-width: 100%;
+      padding-bottom: 8px;
+      /* Allow horizontal scroll on mobile rather than shrinking shapes below 80px */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .scale-row::-webkit-scrollbar { display: none; }
+
+    /* The section containing the scale row must also clip to prevent body overflow */
+    #auto-scale-section {
+      overflow: hidden;
+    }
+
+    .scale-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .scale-icon {
+      /* cornerRadius applied per-element by JS at 22.5% of size — the iOS ratio.
+         The same single rule produces harmonious curves at every dimension. */
+      display: block;
+      background: linear-gradient(160deg, #fffb00 0%, #d9d500 100%);
+      border-radius: 22.5%; /* flicker-fix: always present, clip-path sits on top */
+    }
+
+    .scale-label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      color: var(--white-48);
+      letter-spacing: 0.3px;
+    }
+
+    .scale-microcopy {
+      font-size: 13px;
+      color: var(--white-48);
+      letter-spacing: -0.1px;
+      margin-top: 24px;
+      max-width: 540px;
+    }
+
+    /* --- BORDERS DEMO --- */
+    .border-cards-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 640px;
+    }
+
+    @media (max-width: 640px) {
+      .border-cards-row { grid-template-columns: 1fr; max-width: 320px; }
+    }
+
+    .border-card-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* LEFT: broken border card */
+    .border-bad {
+      background: #1a1813;
+      border: 2px solid #fffb00;
+      padding: 22px;
+      /* clip-path applied by JS: this is where border gets sliced at corners */
+    }
+
+    .border-bad-inner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--yellow);
+      background: transparent;
+      /* border + clip-path on the button too: demonstrates the bug at smaller scale */
+      border: 2px solid var(--yellow);
+      padding: 6px 14px;
+      cursor: pointer;
+      margin-top: 14px;
+      border-radius: 0;
+    }
+
+    /* RIGHT: clean nested squircle card */
+    /* Outer wrapper: clip-path + yellow background + padding = border.
+       filter: drop-shadow on the outer element (box-shadow is clipped away). */
+    .border-good-outer {
+      /* padding: 1.5px; background: #fffb00; filter: drop-shadow — set inline */
+      display: block;
+      border-radius: 22.5%; /* flicker-fix */
+    }
+
+    .border-good-inner {
+      background: #1a1813;
+      padding: 22px;
+      border-radius: 22.5%; /* flicker-fix */
+    }
+
+    /* The nested squircle button inside the clean card */
+    .border-good-btn-outer {
+      display: inline-flex;
+      margin-top: 14px;
+      border-radius: 22.5%; /* flicker-fix */
+    }
+
+    .border-good-btn-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--yellow);
+      background: #1a1813;
+      padding: 6px 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 22.5%; /* flicker-fix */
+    }
+
+    .border-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      color: var(--white-100);
+      margin: 0 0 6px;
+    }
+
+    .border-card-body {
+      font-size: 13px;
+      color: var(--white-55);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .border-caption {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      max-width: 600px;
+      margin-top: 28px;
+      letter-spacing: -0.1px;
+      font-style: italic;
     }
 
     /* --- CARD COMPARISON --- */
@@ -633,6 +789,142 @@
 
     /* hidden SVG defs */
     #sq-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* === MOBILE POLISH === */
+
+    /* Toggle pill: ensure minimum touch targets */
+    @media (max-width: 640px) {
+      .toggle-btn {
+        min-height: 44px;
+        min-width: 88px;
+        font-size: 13px;
+      }
+
+      .cta-primary,
+      .cta-secondary {
+        min-height: 44px;
+        padding: 12px 20px;
+      }
+
+      section {
+        padding: 60px 16px;
+      }
+
+      .hero {
+        padding: 60px 16px 60px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-sub {
+        font-size: 14px;
+      }
+
+      .hero-tagline {
+        font-size: 16px;
+      }
+
+      /* Demo 01: icons must be at least 100px on mobile so squircle is readable.
+         3-column grid with gap 12px. At 375px viewport with 32px padding,
+         each cell = (375 - 32 - 2*12) / 3 = 106px. Good. */
+      .icons-row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        max-width: 100%;
+      }
+
+      /* Demo 02 cards: stack vertically */
+      .cards-row {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 24px;
+      }
+
+      .music-card {
+        max-width: 100%;
+      }
+
+      /* Auto-scale row: allow horizontal scroll, don't shrink shapes */
+      .scale-row {
+        justify-content: flex-start;
+        gap: 16px;
+      }
+
+      /* Borders demo: stack vertically */
+      .border-cards-row {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 24px;
+      }
+
+      /* Code block: ensure horizontal scroll works */
+      .install-block {
+        overflow-x: auto;
+      }
+
+      .install-code {
+        font-size: 12px;
+        min-width: 0;
+        flex: 1;
+      }
+
+      /* install-alt code block */
+      .install-alt {
+        overflow-x: auto;
+      }
+
+      .install-alt code {
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      /* Section dividers reach full width */
+      section + section {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      /* Footer: compact stacking */
+      .footer-main {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .philosophy-body p {
+        font-size: 15px;
+      }
+    }
+
+    /* Medium breakpoint: 414-768 */
+    @media (max-width: 768px) and (min-width: 641px) {
+      section {
+        padding: 70px 20px;
+      }
+
+      .hero {
+        padding: 70px 20px 70px;
+      }
+
+      .cards-row {
+        gap: 24px;
+      }
+
+      .border-cards-row {
+        gap: 24px;
+      }
+    }
+
+    /* Prevent any overflow at 375px */
+    body {
+      overflow-x: hidden;
+    }
   </style>
 </head>
 <body>
@@ -748,6 +1040,45 @@
       <p class="microcopy">Toggle the corners. Watch which one your eyes settle on.</p>
     </section>
 
+    <!-- AUTO-SCALE: DEMO 03 -->
+    <section id="auto-scale-section" aria-labelledby="demo3-heading">
+      <p class="section-label">Auto Scale</p>
+      <h2 class="section-heading" id="demo3-heading">One rule. Every size.</h2>
+
+      <!-- Six squircles at different sizes, bottom-aligned.
+           cornerRadius is always 22.5% of the element side — the iOS ratio.
+           JS measures each element and applies clip-path url(#sq-scale-N).
+           border-radius: 22.5% stays on the element at all times (flicker fix). -->
+      <div class="scale-row" aria-label="Auto-scaled squircles at six sizes">
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-0" data-sq-scale="0" data-sq-size="32" style="width: 32px; height: 32px;"></div>
+          <span class="scale-label">32 px</span>
+        </div>
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-1" data-sq-scale="1" data-sq-size="48" style="width: 48px; height: 48px;"></div>
+          <span class="scale-label">48 px</span>
+        </div>
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-2" data-sq-scale="2" data-sq-size="64" style="width: 64px; height: 64px;"></div>
+          <span class="scale-label">64 px</span>
+        </div>
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-3" data-sq-scale="3" data-sq-size="96" style="width: 96px; height: 96px;"></div>
+          <span class="scale-label">96 px</span>
+        </div>
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-4" data-sq-scale="4" data-sq-size="128" style="width: 128px; height: 128px;"></div>
+          <span class="scale-label">128 px</span>
+        </div>
+        <div class="scale-item">
+          <div class="scale-icon" id="sq-scale-el-5" data-sq-scale="5" data-sq-size="180" style="width: 180px; height: 180px;"></div>
+          <span class="scale-label">180 px</span>
+        </div>
+      </div>
+
+      <p class="scale-microcopy">You never set cornerRadius. The skill scales it from the element. 22.5% of the side, the iOS ratio.</p>
+    </section>
+
     <!-- DEMO 2: CARD COMPARISON -->
     <section aria-labelledby="demo2-heading">
       <p class="section-label">Demo 02</p>
@@ -806,6 +1137,49 @@
       </div>
 
       <p class="card-caption">One feels like software. The other feels like an object.</p>
+    </section>
+
+    <!-- BORDERS DEMO -->
+    <section aria-labelledby="borders-heading">
+      <p class="section-label">Borders</p>
+      <h2 class="section-heading" id="borders-heading">Borders work too.</h2>
+
+      <div class="border-cards-row">
+
+        <!-- LEFT: broken border (CSS border + clip-path = sliced corners) -->
+        <div class="border-card-wrap">
+          <p class="card-label">border on clipped squircle (broken)</p>
+          <!-- CSS border sliced by clip-path: the bug we are showing -->
+          <div class="border-bad" id="border-bad-card">
+            <h3 class="border-card-title">Naive border</h3>
+            <p class="border-card-body">CSS border + clip-path. Corners jagged.</p>
+            <button class="border-bad-inner-btn" id="border-bad-btn">Detail &rarr;</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: clean nested-squircle border (Pattern 7 from SKILL.md) -->
+        <div class="border-card-wrap">
+          <p class="card-label">nested squircle (clean)</p>
+          <!-- Outer: clip-path, yellow bg, 1.5px padding = border. drop-shadow here. -->
+          <!-- Inner: clip-path, dark bg, cornerRadius = outer - padding. -->
+          <div class="border-good-outer" id="border-good-outer"
+               style="padding: 1.5px; background: #fffb00; filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45)); display: inline-block; width: 100%;">
+            <div class="border-good-inner" id="border-good-inner">
+              <h3 class="border-card-title">Clean border</h3>
+              <p class="border-card-body">Nested Squircle pattern. Corners are perfect.</p>
+              <!-- Button: outer yellow squircle + inner dark squircle, same nested pattern -->
+              <div class="border-good-btn-outer" id="border-good-btn-outer"
+                   style="padding: 1px; background: #fffb00; display: inline-flex;">
+                <button class="border-good-btn-inner" id="border-good-btn-inner">Detail &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="border-caption">Same width. Same color. Different math.</p>
+      <p class="microcopy" style="margin-top: 12px; max-width: 560px;">CSS <code style="font-family:ui-monospace,monospace;font-size:11px;color:rgba(255,255,255,0.55)">border</code> on a clipped squircle breaks at the corners (the clip cuts the border line). The skill uses the nested-squircle pattern: outer squircle as border color, padding equals border width, inner squircle slightly smaller radius. Drop-shadow on the wrapper, not box-shadow on the clipped child.</p>
     </section>
 
     <!-- PHILOSOPHY -->
@@ -944,6 +1318,74 @@
           makeClipPath("sq-card-btn", Math.round(rect.width), Math.round(rect.height), 14, 1.0);
         }
 
+        // === AUTO-SCALE SHOWCASE ===
+        // The single iOS rule: cornerRadius = 22.5% of the element size.
+        // Each squircle uses cornerSmoothing 1.0 for maximum visibility in the demo.
+        // We measure actual DOM dimensions (not the data-sq-size attribute) so the
+        // clip-path always matches the rendered pixel size, even if CSS changes it.
+        document.querySelectorAll(".scale-icon").forEach((el, i) => {
+          const rect = el.getBoundingClientRect();
+          const w = Math.round(rect.width);
+          const h = Math.round(rect.height);
+          const cr = Math.round(w * 0.225); // 22.5% — the iOS ratio
+          const id = "sq-scale-" + i;
+          makeClipPath(id, w, h, cr, 1.0);
+          el.dataset.sqId = id;
+        });
+
+        // === BORDERS DEMO ===
+        // LEFT: broken card. We apply a clip-path so the CSS border gets sliced at corners.
+        // This demonstrates the bug that the nested pattern solves.
+        const borderBadCard = document.getElementById("border-bad-card");
+        if (borderBadCard) {
+          const rect = borderBadCard.getBoundingClientRect();
+          const w = Math.round(rect.width);
+          const h = Math.round(rect.height);
+          makeClipPath("sq-border-bad", w, h, 28, 1.0);
+          borderBadCard.dataset.sqId = "sq-border-bad";
+        }
+        const borderBadBtn = document.getElementById("border-bad-btn");
+        if (borderBadBtn) {
+          const rect = borderBadBtn.getBoundingClientRect();
+          makeClipPath("sq-border-bad-btn", Math.round(rect.width), Math.round(rect.height), 8, 1.0);
+          borderBadBtn.dataset.sqId = "sq-border-bad-btn";
+        }
+
+        // RIGHT: clean nested squircle card (Pattern 7 from SKILL.md).
+        // Outer wrapper: cornerRadius 28, smoothing 1.0.
+        // Inner wrapper: cornerRadius 26.5 (outer - 1.5px padding), same smoothing.
+        // We measure actual outer dimensions, then compute inner = outer - padding*2.
+        const borderGoodOuter = document.getElementById("border-good-outer");
+        const borderGoodInner = document.getElementById("border-good-inner");
+        if (borderGoodOuter && borderGoodInner) {
+          const outerRect = borderGoodOuter.getBoundingClientRect();
+          const ow = Math.round(outerRect.width);
+          const oh = Math.round(outerRect.height);
+          makeClipPath("sq-border-good-outer", ow, oh, 28, 1.0);
+          borderGoodOuter.dataset.sqId = "sq-border-good-outer";
+
+          // Inner = outer minus 1.5px padding on each side
+          const iw = Math.max(ow - 3, 10);
+          const ih = Math.max(oh - 3, 10);
+          makeClipPath("sq-border-good-inner", iw, ih, 26.5, 1.0);
+          borderGoodInner.dataset.sqId = "sq-border-good-inner";
+        }
+        // Button inside clean card: outer yellow squircle with 1px padding, inner dark squircle
+        const btnGoodOuter = document.getElementById("border-good-btn-outer");
+        const btnGoodInner = document.getElementById("border-good-btn-inner");
+        if (btnGoodOuter && btnGoodInner) {
+          const boRect = btnGoodOuter.getBoundingClientRect();
+          const bow = Math.round(boRect.width);
+          const boh = Math.round(boRect.height);
+          makeClipPath("sq-border-good-btn-outer", bow, boh, 8, 1.0);
+          btnGoodOuter.dataset.sqId = "sq-border-good-btn-outer";
+
+          const biw = Math.max(bow - 2, 8);
+          const bih = Math.max(boh - 2, 8);
+          makeClipPath("sq-border-good-btn-inner", biw, bih, 7, 1.0);
+          btnGoodInner.dataset.sqId = "sq-border-good-btn-inner";
+        }
+
         squircleReady = true;
         applySquircles();
       } catch (e) {
@@ -971,6 +1413,40 @@
       document.querySelectorAll(".cta-primary, .cta-secondary").forEach(el => {
         if (el.dataset.sqId) el.style.clipPath = `url(#${el.dataset.sqId})`;
       });
+
+      // Auto-scale showcase: apply clip-path to each scale-icon
+      document.querySelectorAll(".scale-icon").forEach(el => {
+        if (el.dataset.sqId) el.style.clipPath = `url(#${el.dataset.sqId})`;
+      });
+
+      // Borders demo: apply clip-paths
+      // LEFT (broken): apply clip-path so the CSS border gets visibly sliced
+      const borderBadCard = document.getElementById("border-bad-card");
+      if (borderBadCard && borderBadCard.dataset.sqId) {
+        borderBadCard.style.clipPath = `url(#${borderBadCard.dataset.sqId})`;
+      }
+      const borderBadBtn = document.getElementById("border-bad-btn");
+      if (borderBadBtn && borderBadBtn.dataset.sqId) {
+        borderBadBtn.style.clipPath = `url(#${borderBadBtn.dataset.sqId})`;
+      }
+
+      // RIGHT (clean): apply clip-paths to outer and inner nested squircles
+      const borderGoodOuter = document.getElementById("border-good-outer");
+      if (borderGoodOuter && borderGoodOuter.dataset.sqId) {
+        borderGoodOuter.style.clipPath = `url(#${borderGoodOuter.dataset.sqId})`;
+      }
+      const borderGoodInner = document.getElementById("border-good-inner");
+      if (borderGoodInner && borderGoodInner.dataset.sqId) {
+        borderGoodInner.style.clipPath = `url(#${borderGoodInner.dataset.sqId})`;
+      }
+      const btnGoodOuter = document.getElementById("border-good-btn-outer");
+      if (btnGoodOuter && btnGoodOuter.dataset.sqId) {
+        btnGoodOuter.style.clipPath = `url(#${btnGoodOuter.dataset.sqId})`;
+      }
+      const btnGoodInner = document.getElementById("border-good-btn-inner");
+      if (btnGoodInner && btnGoodInner.dataset.sqId) {
+        btnGoodInner.style.clipPath = `url(#${btnGoodInner.dataset.sqId})`;
+      }
     }
 
     function applyFallback() {
@@ -991,6 +1467,20 @@
       document.querySelectorAll(".cta-primary, .cta-secondary").forEach(el => {
         el.style.clipPath = "none";
         el.style.borderRadius = "10px";
+      });
+      // Scale icons fallback
+      document.querySelectorAll(".scale-icon").forEach(el => {
+        el.style.clipPath = "none";
+        // border-radius already set via CSS class
+      });
+      // Borders demo fallback
+      ["border-bad-card", "border-bad-btn", "border-good-outer", "border-good-inner",
+       "border-good-btn-outer", "border-good-btn-inner"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.style.clipPath = "none";
+          el.style.borderRadius = "22.5%";
+        }
       });
     }
 
