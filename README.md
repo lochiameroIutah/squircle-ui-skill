@@ -4,19 +4,23 @@ A Claude Code skill that makes [`@squircle-js/react`](https://squircle.js.org) t
 
 ## Install
 
+One liner with the [`skills`](https://github.com/vercel-labs/skills) CLI by Vercel:
+
+```bash
+npx skills add lochiameroIutah/squircle-ui-skill -a claude-code -g
+```
+
+That drops the skill into `~/.claude/skills/squircle-ui`, available globally to Claude Code. Drop `-g` to install it only inside the current project (`./.claude/skills/`).
+
+Or clone manually:
+
 ```bash
 mkdir -p ~/.claude/skills
 cd ~/.claude/skills
 git clone https://github.com/lochiameroIutah/squircle-ui-skill.git squircle-ui
 ```
 
-Claude Code will auto-discover the skill from that point on.
-
-You can also try the community `skills` CLI (not officially tested with this repo):
-
-```bash
-npx skills add lochiameroIutah/squircle-ui-skill
-```
+Claude Code auto discovers the skill from that point on.
 
 ## Why this exists
 
