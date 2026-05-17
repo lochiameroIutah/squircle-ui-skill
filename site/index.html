@@ -269,22 +269,28 @@
 
     /* --- APP ICONS GRID --- */
     .icons-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 22px;
       margin-bottom: 20px;
+      max-width: 1180px;
     }
 
     .app-icon-wrap {
       position: relative;
-      width: 104px;
-      height: 104px;
-      flex-shrink: 0;
-      /* Drop shadow */
-      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.55));
       transition: filter 200ms ease-out;
     }
-    .app-icon-wrap:hover { filter: drop-shadow(0 12px 32px rgba(0,0,0,0.65)); }
+    .app-icon-wrap:hover { filter: drop-shadow(0 20px 50px rgba(0,0,0,0.7)); }
+
+    @media (max-width: 1100px) {
+      .icons-row { grid-template-columns: repeat(3, 1fr); max-width: 640px; }
+    }
+    @media (max-width: 520px) {
+      .icons-row { grid-template-columns: repeat(2, 1fr); max-width: 360px; gap: 16px; }
+    }
 
     .app-icon-inner {
       width: 100%;
@@ -302,10 +308,10 @@
       border-radius: 0;
     }
 
-    /* rounded state */
+    /* rounded state: 22.5% of element size, computed via JS at runtime */
     .app-icon-inner.rounded {
       clip-path: none !important;
-      border-radius: 23.4px; /* 22.5% of 104px */
+      border-radius: 22.5%;
     }
 
     /* inner highlight overlay */
@@ -351,7 +357,7 @@
       max-width: 280px;
       background: #1a1813;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+      filter: drop-shadow(0 18px 50px rgba(0,0,0,0.45));
     }
 
     .music-card-cover {
@@ -409,8 +415,8 @@
     }
 
     /* rounded card style */
-    .card-rounded { border-radius: 16px; }
-    .card-rounded .music-card-btn { border-radius: 8px; }
+    .card-rounded { border-radius: 32px; }
+    .card-rounded .music-card-btn { border-radius: 14px; }
 
     /* squircle card style - clip-path applied via JS */
     .card-sq { border-radius: 0; }
@@ -749,7 +755,7 @@
       <div class="cards-row">
         <!-- LEFT: Rounded card -->
         <div class="card-wrap">
-          <p class="card-label">Tailwind <code style="font-family:ui-monospace,monospace;">rounded-2xl</code></p>
+          <p class="card-label">Tailwind <code style="font-family:ui-monospace,monospace;">rounded-[32px]</code></p>
           <div class="music-card card-rounded" id="card-rounded">
             <div class="music-card-cover" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); display:flex; align-items:center; justify-content:center; border-radius: 16px 16px 0 0;">
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
@@ -764,7 +770,7 @@
               <div class="music-card-progress">
                 <div class="music-card-progress-fill"></div>
               </div>
-              <button class="music-card-btn card-rounded-btn" style="border-radius: 8px;" aria-label="Play now">
+              <button class="music-card-btn card-rounded-btn" style="border-radius: 14px;" aria-label="Play now">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 2l9 5-9 5V2z"/></svg>
                 Play Now
               </button>
@@ -774,7 +780,7 @@
 
         <!-- RIGHT: Squircle card -->
         <div class="card-wrap">
-          <p class="card-label">squircle, <code style="font-family:ui-monospace,monospace;">cornerRadius 16</code></p>
+          <p class="card-label">squircle, <code style="font-family:ui-monospace,monospace;">cornerRadius 32</code></p>
           <div class="music-card card-sq" id="card-sq">
             <div class="music-card-cover" id="card-sq-cover" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); display:flex; align-items:center; justify-content:center;">
               <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
@@ -903,8 +909,17 @@
           defs.appendChild(clip);
         }
 
-        // Generate clip paths for each size we need
-        makeClipPath("sq-104", 104, 104, 23, 0.6);
+        // Demo icons: generate per actual rendered size (180 / 132 / 104 responsive).
+        // Use cornerSmoothing 1.0 to dramatize the squircle vs rounded contrast in the demo.
+        // (Production default per SKILL.md is 0.6, but a comparison demo needs to make the
+        // geometric difference unmistakable.)
+        document.querySelectorAll(".app-icon-inner").forEach((el, i) => {
+          const rect = el.getBoundingClientRect();
+          const size = Math.round(rect.width);
+          const id = "sq-icon-" + i;
+          makeClipPath(id, size, size, Math.round(size * 0.225), 1.0);
+          el.dataset.sqId = id;
+        });
 
         // CTA buttons: measure actual sizes from DOM
         document.querySelectorAll(".cta-primary, .cta-secondary").forEach((el, i) => {
@@ -918,14 +933,14 @@
         const cardSqEl = document.getElementById("card-sq");
         if (cardSqEl) {
           const rect = cardSqEl.getBoundingClientRect();
-          makeClipPath("sq-card", Math.round(rect.width), Math.round(rect.height), 20, 0.6);
+          makeClipPath("sq-card", Math.round(rect.width), Math.round(rect.height), 32, 1.0);
         }
 
         // Card button
         const cardSqBtnEl = document.getElementById("card-sq-btn");
         if (cardSqBtnEl) {
           const rect = cardSqBtnEl.getBoundingClientRect();
-          makeClipPath("sq-card-btn", Math.round(rect.width), Math.round(rect.height), 10, 0.6);
+          makeClipPath("sq-card-btn", Math.round(rect.width), Math.round(rect.height), 14, 1.0);
         }
 
         squircleReady = true;
@@ -937,9 +952,9 @@
     }
 
     function applySquircles() {
-      // App icons
+      // App icons: each element has its own clipPath id stored on dataset.sqId
       document.querySelectorAll(".app-icon-inner.sq").forEach(el => {
-        el.style.clipPath = "url(#sq-104)";
+        if (el.dataset.sqId) el.style.clipPath = `url(#${el.dataset.sqId})`;
         el.style.borderRadius = "0";
       });
 
@@ -957,9 +972,9 @@
     }
 
     function applyFallback() {
-      // Fallback: use border-radius values that approximate squircle feel
+      // Fallback if figma-squircle CDN fails: approximate with border-radius
       document.querySelectorAll(".app-icon-inner.sq").forEach(el => {
-        el.style.borderRadius = "26px";
+        el.style.borderRadius = "22.5%";
       });
       const cardSq = document.getElementById("card-sq");
       if (cardSq) {
@@ -1001,8 +1016,8 @@
           el.classList.add("sq");
           el.classList.remove("rounded");
           el.style.borderRadius = "0";
-          if (squircleReady) {
-            el.style.clipPath = "url(#sq-104)";
+          if (squircleReady && el.dataset.sqId) {
+            el.style.clipPath = `url(#${el.dataset.sqId})`;
           }
         });
       } else {
@@ -1015,7 +1030,8 @@
           el.classList.remove("sq");
           el.classList.add("rounded");
           el.style.clipPath = "none";
-          el.style.borderRadius = "23.4px";
+          // 22.5% is the iOS "rounded rect" ratio — same size on every breakpoint
+          el.style.borderRadius = "22.5%";
         });
       }
     }
