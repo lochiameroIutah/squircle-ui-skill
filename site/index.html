@@ -1343,7 +1343,7 @@
           const rect = borderBadCard.getBoundingClientRect();
           const w = Math.round(rect.width);
           const h = Math.round(rect.height);
-          makeClipPath("sq-border-bad", w, h, 28, 0.6);
+          makeClipPath("sq-border-bad", w, h, 18, 0.6);
           borderBadCard.dataset.sqId = "sq-border-bad";
         }
         const borderBadBtn = document.getElementById("border-bad-btn");
@@ -1363,13 +1363,13 @@
           const outerRect = borderGoodOuter.getBoundingClientRect();
           const ow = Math.round(outerRect.width);
           const oh = Math.round(outerRect.height);
-          makeClipPath("sq-border-good-outer", ow, oh, 28, 0.6);
+          makeClipPath("sq-border-good-outer", ow, oh, 18, 0.6);
           borderGoodOuter.dataset.sqId = "sq-border-good-outer";
 
           // Inner = outer minus 1.5px padding on each side
           const iw = Math.max(ow - 3, 10);
           const ih = Math.max(oh - 3, 10);
-          makeClipPath("sq-border-good-inner", iw, ih, 26.5, 0.6);
+          makeClipPath("sq-border-good-inner", iw, ih, 16.5, 0.6);
           borderGoodInner.dataset.sqId = "sq-border-good-inner";
         }
         // Button inside clean card: outer yellow squircle with 1px padding, inner dark squircle
