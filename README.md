@@ -2,6 +2,22 @@
 
 A Claude Code skill that makes [`@squircle-js/react`](https://squircle.js.org) the default for rounded UI in React, replacing `border-radius` / Tailwind's `rounded-*`.
 
+## Install
+
+```bash
+mkdir -p ~/.claude/skills
+cd ~/.claude/skills
+git clone https://github.com/lochiameroIutah/squircle-ui-skill.git squircle-ui
+```
+
+Claude Code will auto-discover the skill from that point on.
+
+You can also try the community `skills` CLI (not officially tested with this repo):
+
+```bash
+npx skills add lochiameroIutah/squircle-ui-skill
+```
+
 ## Why this exists
 
 I believe squircles could harmonize digital life with the real world a little more.
@@ -23,16 +39,6 @@ Inside:
 - Anti-blob rule for small elements
 - Common-mistakes table
 - Exceptions that stay on plain CSS (`rounded-full` for true circles, small inputs)
-
-## Install
-
-```bash
-mkdir -p ~/.claude/skills
-cd ~/.claude/skills
-git clone https://github.com/lochiameroIutah/squircle-ui-skill.git squircle-ui
-```
-
-Claude Code will auto-discover the skill from that point on.
 
 ## Forcing it as your default
 
