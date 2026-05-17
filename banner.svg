@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="squircle-ui banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0f"/>
+      <stop offset="1" stop-color="#16161f"/>
+    </linearGradient>
+    <linearGradient id="rounded" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3a44"/>
+      <stop offset="1" stop-color="#2a2a32"/>
+    </linearGradient>
+    <linearGradient id="squircle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7c5cff"/>
+      <stop offset="1" stop-color="#4f3fcf"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#bg)"/>
+
+  <!-- Left: border-radius (circular arc, abrupt G1) -->
+  <g transform="translate(220,140)">
+    <rect x="0" y="0" width="160" height="160" rx="36" ry="36" fill="url(#rounded)"/>
+    <text x="80" y="200" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#8a8a96" letter-spacing="0.5">border-radius</text>
+    <text x="80" y="222" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#55555f" letter-spacing="0.5">G1 — arc of a circle</text>
+  </g>
+
+  <!-- Arrow -->
+  <g transform="translate(450,220)" stroke="#55555f" fill="none" stroke-width="1.5" stroke-linecap="round">
+    <line x1="0" y1="0" x2="60" y2="0"/>
+    <polyline points="50,-6 60,0 50,6"/>
+  </g>
+
+  <!-- Right: squircle (superellipse, smooth G2) -->
+  <!-- Approximated via cubic beziers, figma-squircle style, 160x160, cornerRadius~40, smoothing~0.6 -->
+  <g transform="translate(540,140)">
+    <path d="
+      M 36 0
+      L 124 0
+      C 145 0 156 7 160 36
+      L 160 124
+      C 160 153 153 160 124 160
+      L 36 160
+      C 7 160 0 153 0 124
+      L 0 36
+      C 0 7 7 0 36 0
+      Z" fill="url(#squircle)"/>
+    <text x="80" y="200" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#c4b9ff" letter-spacing="0.5">squircle</text>
+    <text x="80" y="222" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#7d6fc0" letter-spacing="0.5">G2 — continuous superellipse</text>
+  </g>
+
+  <!-- Wordmark + tagline -->
+  <g transform="translate(760,160)">
+    <text x="0" y="0" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="700" font-size="56" fill="#f5f5f7" letter-spacing="-1.5">squircle-ui</text>
+    <text x="2" y="34" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="17" fill="#9a9aa6" letter-spacing="-0.2">A Claude Code skill.</text>
+    <text x="2" y="62" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="15" fill="#6a6a76" letter-spacing="-0.1">Harmonizing digital life</text>
+    <text x="2" y="82" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="15" fill="#6a6a76" letter-spacing="-0.1">with the real world.</text>
+  </g>
+</svg>
