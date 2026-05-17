@@ -197,37 +197,56 @@ export function AnimatedCard({ children }) {
 
 `asChild` su `motion.div` funziona perfettamente — il clip-path resta stabile durante le transform.
 
-## Pattern 7 — Bordo (workaround manuale)
+## Pattern 7 — Bordo (regola ferrea: mai `border` CSS diretto)
 
-`@squircle-js/react` **non ha un componente bordo nativo**. Per un bordo stile iOS usa due Squircle annidati: quello esterno è il colore del bordo, quello interno è il fill con `cornerRadius` ridotto dello spessore del bordo.
+**Mai** applicare `border` CSS direttamente su un componente `Squircle`. Il `border` CSS viene tagliato dal clip-path dello squircle e negli angoli risulta visivamente "rotto", interrotto o sgranato.
+
+Il bordo si ottiene SEMPRE con due Squircle annidati. Lo squircle esterno fa da "bordo" essendo lo sfondo visibile sotto, lo squircle interno è il fill reale della card.
+
+**Regole (in ordine):**
+
+1. Crea uno Squircle **esterno**.
+2. Dagli il colore del bordo come `background`.
+3. Dagli `padding` pari allo spessore del bordo (es. `1px`, `1.5px`, `2px`).
+4. Dentro metti un secondo Squircle.
+5. Lo Squircle interno ha lo sfondo reale della card.
+6. Il `cornerRadius` interno è leggermente più piccolo: `cornerRadiusEsterno - borderWidth`.
+7. Stesso `cornerSmoothing` su entrambi.
+8. Mai `box-shadow` direttamente sullo Squircle (viene clippata). Usa `filter: drop-shadow` sul wrapper esterno.
 
 ```jsx
 import { Squircle } from "@squircle-js/react";
 
 export function BorderedCard({ children }) {
-  const borderWidth = 1;
-  const outerRadius = 20;
-
   return (
     <Squircle
-      cornerRadius={outerRadius}
-      cornerSmoothing={0.6}
-      className="bg-gray-200"
+      cornerRadius={64}
+      cornerSmoothing={1}
+      style={{
+        padding: "1.5px",
+        background: "rgba(199, 212, 0, 0.7)",
+        filter: "drop-shadow(0 28px 70px rgba(0, 0, 0, 0.5))",
+      }}
     >
       <Squircle
-        cornerRadius={outerRadius - borderWidth}
-        cornerSmoothing={0.6}
-        className="bg-white p-6"
-        style={{ margin: borderWidth }}
+        cornerRadius={62.5}
+        cornerSmoothing={1}
+        style={{ background: "rgba(4, 6, 4, 0.93)" }}
       >
-        {children}
+        <div style={{ padding: "28px" }}>
+          {children}
+        </div>
       </Squircle>
     </Squircle>
   );
 }
 ```
 
-Costoso (due clip-path). Usalo solo quando il bordo è davvero parte dell'identità visiva.
+**Perché funziona:** lo Squircle esterno colorato non è un vero `border`, è lo sfondo del wrapper. Visto in trasparenza attraverso il `padding`, sembra un bordo, ma è pulito perché segue lo stesso clip-path G2 dell'interno. Niente artefatti agli angoli.
+
+**Drop-shadow vs box-shadow:** `box-shadow` viene clippata dal clip-path dello Squircle e sparisce. `filter: drop-shadow` invece segue la forma effettiva del clip-path. Sul wrapper esterno funziona sempre, anche con bordo trasparente o gradient.
+
+Costoso (due clip-path + filter). Usalo quando il bordo è davvero parte dell'identità visiva. Per card senza bordo, basta un singolo Squircle.
 
 ## Eccezioni accettabili
 
@@ -243,6 +262,8 @@ Costoso (due clip-path). Usalo solo quando il bordo è davvero parte dell'identi
 | `<img>` non clippato | Manca `asChild` o `overflow-hidden` | Aggiungi `asChild` sull'`<img>` |
 | Layout shift al primo paint | `Squircle` (con ResizeObserver) su elemento a dim. fisse | Usa `StaticSquircle` |
 | Look "troppo morbido", non iOS | `cornerSmoothing` ≥ 0.9 | Torna a `0.6` |
+| Bordo "rotto" o sgranato agli angoli | `border` CSS applicato direttamente sullo Squircle | Usa il pattern doppio Squircle (Pattern 7), MAI `border` diretto |
+| Ombra sparita o tagliata | `box-shadow` su Squircle clippato | Sposta a `filter: drop-shadow` sul wrapper esterno |
 
 ## Checklist prima di committare
 
