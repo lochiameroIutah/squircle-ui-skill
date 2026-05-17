@@ -298,20 +298,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: clip-path 300ms cubic-bezier(0.16, 1, 0.3, 1), border-radius 300ms cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      /* Border-radius is always 22.5% (iOS rounded ratio). When `.sq` is active,
+         the clip-path mask sits on top and shapes the squircle. When `.rounded`,
+         clip-path is removed and the underlying border-radius shows through.
+         No transition on clip-path because url() values are discrete (CSS can't
+         interpolate between two named clip-paths, attempting to causes a brief
+         "square" frame as border-radius animates from 0). */
+      border-radius: 22.5%;
     }
 
-    /* squircle state = default */
-    .app-icon-inner.sq {
-      border-radius: 0;
-    }
+    .app-icon-inner.sq { /* clip-path applied per-element by JS */ }
 
-    /* rounded state: 22.5% of element size, computed via JS at runtime */
     .app-icon-inner.rounded {
       clip-path: none !important;
-      border-radius: 22.5%;
     }
 
     /* inner highlight overlay */
@@ -952,10 +953,11 @@
     }
 
     function applySquircles() {
-      // App icons: each element has its own clipPath id stored on dataset.sqId
+      // App icons: each element has its own clipPath id stored on dataset.sqId.
+      // border-radius stays at the CSS-default 22.5% so toggling off clip-path
+      // reveals a clean rounded-rect instantly (no flicker through a square state).
       document.querySelectorAll(".app-icon-inner.sq").forEach(el => {
         if (el.dataset.sqId) el.style.clipPath = `url(#${el.dataset.sqId})`;
-        el.style.borderRadius = "0";
       });
 
       // Squircle card
@@ -1015,7 +1017,6 @@
         iconInners.forEach(el => {
           el.classList.add("sq");
           el.classList.remove("rounded");
-          el.style.borderRadius = "0";
           if (squircleReady && el.dataset.sqId) {
             el.style.clipPath = `url(#${el.dataset.sqId})`;
           }
@@ -1030,8 +1031,6 @@
           el.classList.remove("sq");
           el.classList.add("rounded");
           el.style.clipPath = "none";
-          // 22.5% is the iOS "rounded rect" ratio — same size on every breakpoint
-          el.style.borderRadius = "22.5%";
         });
       }
     }
