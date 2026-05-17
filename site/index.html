@@ -438,26 +438,27 @@
       border-radius: 0;
     }
 
-    /* RIGHT: clean nested squircle card */
-    /* Outer wrapper: clip-path + yellow background + padding = border.
-       filter: drop-shadow on the outer element (box-shadow is clipped away). */
+    /* RIGHT: clean nested squircle card.
+       Same outer dimensions as `.border-bad` so the only visible difference is
+       how the border is rendered. No border-radius CSS fallback here: the toggle
+       doesn't apply to this section, and a 22.5% fallback would compete with
+       the clip-path shape on visible rendering. */
     .border-good-outer {
-      /* padding: 1.5px; background: #fffb00; filter: drop-shadow — set inline */
       display: block;
-      border-radius: 22.5%; /* flicker-fix */
+      box-sizing: border-box;
+      width: 100%;
     }
 
     .border-good-inner {
       background: #1a1813;
       padding: 22px;
-      border-radius: 22.5%; /* flicker-fix */
+      box-sizing: border-box;
     }
 
     /* The nested squircle button inside the clean card */
     .border-good-btn-outer {
       display: inline-flex;
       margin-top: 14px;
-      border-radius: 22.5%; /* flicker-fix */
     }
 
     .border-good-btn-inner {
@@ -471,7 +472,7 @@
       padding: 6px 14px;
       cursor: pointer;
       border: none;
-      border-radius: 22.5%; /* flicker-fix */
+      box-sizing: border-box;
     }
 
     .border-card-title {
@@ -1162,8 +1163,8 @@
           <p class="card-label">border on clipped squircle (broken)</p>
           <!-- CSS border sliced by clip-path: the bug we are showing -->
           <div class="border-bad" id="border-bad-card">
-            <h3 class="border-card-title">Naive border</h3>
-            <p class="border-card-body">CSS border + clip-path. Corners jagged.</p>
+            <h3 class="border-card-title">Same content</h3>
+            <p class="border-card-body">Same shape. Same shadow. Same border thickness. Only the math differs.</p>
             <button class="border-bad-inner-btn" id="border-bad-btn">Detail &rarr;</button>
           </div>
         </div>
@@ -1174,10 +1175,10 @@
           <!-- Outer: clip-path, yellow bg, 1.5px padding = border. drop-shadow here. -->
           <!-- Inner: clip-path, dark bg, cornerRadius = outer - padding. -->
           <div class="border-good-outer" id="border-good-outer"
-               style="padding: 1.5px; background: #fffb00; filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45)); display: inline-block; width: 100%;">
+               style="padding: 1.5px; background: #fffb00; filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));">
             <div class="border-good-inner" id="border-good-inner">
-              <h3 class="border-card-title">Clean border</h3>
-              <p class="border-card-body">Nested Squircle pattern. Corners are perfect.</p>
+              <h3 class="border-card-title">Same content</h3>
+              <p class="border-card-body">Same shape. Same shadow. Same border thickness. Only the math differs.</p>
               <!-- Button: outer yellow squircle + inner dark squircle, same nested pattern -->
               <div class="border-good-btn-outer" id="border-good-btn-outer"
                    style="padding: 1px; background: #fffb00; display: inline-flex;">
