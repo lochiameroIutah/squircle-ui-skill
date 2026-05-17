@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="squircle-ui banner">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1c1a08"/>
-      <stop offset="0.55" stop-color="#0e0d05"/>
+      <stop offset="0" stop-color="#2e2700"/>
+      <stop offset="0.5" stop-color="#15110a"/>
       <stop offset="1" stop-color="#0a0a0e"/>
     </linearGradient>
     <linearGradient id="rounded" x1="0" y1="0" x2="0" y2="1">
@@ -13,55 +13,57 @@
       <stop offset="0" stop-color="#fffb00"/>
       <stop offset="1" stop-color="#d9d500"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.7">
-      <stop offset="0" stop-color="#fffb00" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="#fffb00" stop-opacity="0"/>
-    </radialGradient>
+    <!-- Reusable squircle shape, defined at 160x160 with cornerRadius~36 (Apple/iOS preset). Reused via <use> with scaling. -->
+    <path id="sq" d="M 36 0 L 124 0 C 145 0 156 7 160 36 L 160 124 C 160 153 153 160 124 160 L 36 160 C 7 160 0 153 0 124 L 0 36 C 0 7 7 0 36 0 Z"/>
   </defs>
 
-  <!-- Canvas 1200x400. Centered block width: 920px. Left margin: 140px. -->
   <rect width="1200" height="400" fill="url(#bg)"/>
 
-  <!-- Brand glow behind the squircle -->
-  <circle cx="380" cy="200" r="200" fill="url(#glow)"/>
-
-  <!-- Comparison block (left half): rounded -> arrow -> squircle -->
-  <!-- rounded at x=140, squircle at x=440 (gap 40 + arrow 60 + gap 40 = 140 between boxes) -->
-  <g transform="translate(140,120)">
+  <!--
+    LEFT BLOCK: rounded -> arrow -> squircle. Vertically centered at y=200.
+    rounded x=145, squircle x=445, ends at x=605.
+  -->
+  <g transform="translate(145,120)">
     <rect x="0" y="0" width="160" height="160" rx="36" ry="36" fill="url(#rounded)"/>
     <text x="80" y="190" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff" fill-opacity="0.55" letter-spacing="0.4">border-radius</text>
-    <text x="80" y="210" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#ffffff" fill-opacity="0.30" letter-spacing="0.5">G1 — arc of a circle</text>
+    <text x="80" y="210" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#ffffff" fill-opacity="0.30" letter-spacing="0.5">G1 · arc of a circle</text>
   </g>
 
-  <g transform="translate(340,200)" stroke="#fffb00" stroke-opacity="0.55" fill="none" stroke-width="1.5" stroke-linecap="round">
+  <g transform="translate(345,200)" stroke="#fffb00" stroke-opacity="0.65" fill="none" stroke-width="1.5" stroke-linecap="round">
     <line x1="0" y1="0" x2="60" y2="0"/>
     <polyline points="50,-6 60,0 50,6"/>
   </g>
 
-  <g transform="translate(440,120)">
-    <path d="
-      M 36 0
-      L 124 0
-      C 145 0 156 7 160 36
-      L 160 124
-      C 160 153 153 160 124 160
-      L 36 160
-      C 7 160 0 153 0 124
-      L 0 36
-      C 0 7 7 0 36 0
-      Z" fill="url(#squircle)"/>
+  <g transform="translate(445,120)">
+    <use href="#sq" fill="url(#squircle)"/>
     <text x="80" y="190" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#fffb00" letter-spacing="0.4">squircle</text>
-    <text x="80" y="210" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#ffffff" fill-opacity="0.50" letter-spacing="0.5">G2 — continuous superellipse</text>
+    <text x="80" y="210" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#ffffff" fill-opacity="0.50" letter-spacing="0.5">G2 · continuous superellipse</text>
   </g>
 
-  <!-- Wordmark + tagline (right half), starts at x=700 to leave 100px gap from squircle -->
-  <g transform="translate(700,170)">
-    <text x="0" y="0" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="700" font-size="56" fill="#ffffff" letter-spacing="-1.5">squircle<tspan fill="#fffb00">-ui</tspan></text>
-    <text x="2" y="32" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="17" fill="#ffffff" fill-opacity="0.70" letter-spacing="-0.2">A Claude Code skill.</text>
-    <text x="2" y="60" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="15" fill="#ffffff" fill-opacity="0.45" letter-spacing="-0.1">Harmonizing digital life</text>
-    <text x="2" y="80" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="15" fill="#ffffff" fill-opacity="0.45" letter-spacing="-0.1">with the real world.</text>
+  <!--
+    TOP RIGHT: wordmark + tagline. Sits above the scale row.
+  -->
+  <g transform="translate(685,150)">
+    <text x="0" y="0" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="700" font-size="64" fill="#ffffff" letter-spacing="-1.8">squircle<tspan fill="#fffb00">-ui</tspan></text>
+    <text x="2" y="30" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="500" font-size="17" fill="#ffffff" fill-opacity="0.75" letter-spacing="-0.2">A Claude Code skill.</text>
+    <text x="2" y="58" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="14" fill="#ffffff" fill-opacity="0.45" letter-spacing="-0.05">Harmonizing digital life with the real world.</text>
   </g>
 
-  <!-- Footer credit -->
-  <text x="600" y="370" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.30" letter-spacing="0.8">built on @squircle-js/react</text>
+  <!--
+    BOTTOM RIGHT: scale row.
+    4 squircles at 24, 40, 60, 80 px, baseline-aligned (bottom at y=360).
+    Demonstrates auto-scale: the skill picks the right cornerRadius for each size, you never set it manually.
+    Sizes ascending left to right. Right edge at x=1145.
+    Widths: 24 + 16 + 40 + 16 + 60 + 16 + 80 = 252. Start x = 1145 - 252 = 893.
+  -->
+  <g>
+    <use href="#sq" transform="translate(893,336) scale(0.15)" fill="url(#squircle)"/>
+    <use href="#sq" transform="translate(933,320) scale(0.25)" fill="url(#squircle)"/>
+    <use href="#sq" transform="translate(989,300) scale(0.375)" fill="url(#squircle)"/>
+    <use href="#sq" transform="translate(1065,280) scale(0.5)" fill="url(#squircle)"/>
+  </g>
+  <text x="1019" y="378" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.50" letter-spacing="0.5">auto-scales · always harmonized</text>
+
+  <!-- Footer credit, bottom-left -->
+  <text x="145" y="378" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.28" letter-spacing="0.8">built on @squircle-js/react</text>
 </svg>
