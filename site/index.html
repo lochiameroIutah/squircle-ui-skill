@@ -405,12 +405,20 @@
       gap: 10px;
     }
 
-    /* LEFT: broken border card */
+    /* LEFT: naive border card. Same outer dimensions and shadow as the clean
+       card. The only difference is HOW the border is drawn: CSS `border` on a
+       clipped element. The border is rendered on the rectangular box, then the
+       clip-path masks the whole element to the squircle shape. Where the
+       squircle curves inward from the rect (the four corners), the border line
+       has nothing to attach to and disappears. That's the bug. */
     .border-bad {
       background: #1a1813;
-      border: 2px solid #fffb00;
+      border: 1.5px solid #fffb00;
       padding: 22px;
-      /* clip-path applied by JS: this is where border gets sliced at corners */
+      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.45));
+      box-sizing: border-box;
+      width: 100%;
+      /* clip-path applied by JS */
     }
 
     .border-bad-inner-btn {
@@ -421,11 +429,12 @@
       font-weight: 600;
       color: var(--yellow);
       background: transparent;
-      /* border + clip-path on the button too: demonstrates the bug at smaller scale */
-      border: 2px solid var(--yellow);
+      /* Same antipattern at smaller scale, same bug at the button corners */
+      border: 1px solid var(--yellow);
       padding: 6px 14px;
       cursor: pointer;
       margin-top: 14px;
+      box-sizing: border-box;
       border-radius: 0;
     }
 
