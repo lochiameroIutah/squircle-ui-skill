@@ -5,12 +5,22 @@
       <stop offset="0.5" stop-color="#15110a"/>
       <stop offset="1" stop-color="#0a0a0e"/>
     </linearGradient>
-    <!-- Solid fill (gradient would band visibly at 220px tall). -->
-    <radialGradient id="rounded" cx="0.3" cy="0.2" r="1.1">
-      <stop offset="0" stop-color="#26241b"/>
-      <stop offset="0.6" stop-color="#1d1b14"/>
-      <stop offset="1" stop-color="#15130e"/>
-    </radialGradient>
+    <!-- Solid (gradient would band visibly). Noise filter below adds dithering. -->
+    <linearGradient id="rounded">
+      <stop offset="0" stop-color="#1d1b14"/>
+      <stop offset="1" stop-color="#1d1b14"/>
+    </linearGradient>
+
+    <!-- Fine-grain noise overlay to dither all gradients and kill 8-bit banding.
+         Applied over the whole canvas at very low opacity (~5%). The eye averages
+         the noise and reads the gradient as smooth. Classic Stripe/Linear trick. -->
+    <filter id="noise" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" seed="3"/>
+      <feColorMatrix values="0 0 0 0 1
+                             0 0 0 0 1
+                             0 0 0 0 1
+                             0 0 0 0.06 0"/>
+    </filter>
     <linearGradient id="squircle" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#fffb00"/>
       <stop offset="1" stop-color="#d9d500"/>
@@ -24,6 +34,8 @@
   </defs>
 
   <rect width="1200" height="675" fill="url(#bg)"/>
+  <!-- Noise overlay sits between bg and content to dither the bg gradient. -->
+  <rect width="1200" height="675" fill="black" filter="url(#noise)" opacity="1"/>
 
   <!--
     HEADER (y=72..170): wordmark centered.
