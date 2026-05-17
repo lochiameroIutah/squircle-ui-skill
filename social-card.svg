@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="squircle-ui social card">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2e2700"/>
+      <stop offset="0.5" stop-color="#15110a"/>
+      <stop offset="1" stop-color="#0a0a0e"/>
+    </linearGradient>
+    <linearGradient id="rect" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c2a1f"/>
+      <stop offset="1" stop-color="#1a1813"/>
+    </linearGradient>
+    <linearGradient id="sq" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffb00"/>
+      <stop offset="1" stop-color="#d9d500"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <!--
+    Centered comparison.
+    Two 280x280 shapes, gap 80, total content width 640.
+    Side margin (1200-640)/2 = 280.
+    Vertical placement: shape from y=210 to y=490.
+  -->
+
+  <!-- LEFT: standard rounded rectangle (border-radius). Cubic Bezier with 0.55 ratio,
+       the canonical circle-quarter approximation. -->
+  <g transform="translate(280,210)">
+    <path d="
+      M 63 0
+      L 217 0
+      C 251.7 0 280 28.3 280 63
+      L 280 217
+      C 280 251.7 251.7 280 217 280
+      L 63 280
+      C 28.3 280 0 251.7 0 217
+      L 0 63
+      C 0 28.3 28.3 0 63 0
+      Z" fill="url(#rect)"/>
+    <text x="140" y="318" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#ffffff" fill-opacity="0.55" letter-spacing="0.3">border-radius</text>
+    <text x="140" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.32" letter-spacing="0.4">G1 · arc of a circle</text>
+  </g>
+
+  <!-- RIGHT: squircle. Control points pulled further into the straight edge to
+       simulate the G2-continuous superellipse used by iOS. -->
+  <g transform="translate(640,210)">
+    <path d="
+      M 63 0
+      L 217 0
+      C 270.5 0 280 9.5 280 63
+      L 280 217
+      C 280 270.5 270.5 280 217 280
+      L 63 280
+      C 9.5 280 0 270.5 0 217
+      L 0 63
+      C 0 9.5 9.5 0 63 0
+      Z" fill="url(#sq)"/>
+    <text x="140" y="318" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#fffb00" letter-spacing="0.3">squircle</text>
+    <text x="140" y="340" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.50" letter-spacing="0.4">G2 · continuous superellipse</text>
+  </g>
+
+  <!-- TOP: wordmark -->
+  <text x="600" y="116" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="700" font-size="56" fill="#ffffff" letter-spacing="-1.6">squircle<tspan fill="#fffb00">-ui</tspan></text>
+  <text x="600" y="148" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="400" font-size="15" fill="#ffffff" fill-opacity="0.55" letter-spacing="-0.05">A Claude Code skill.</text>
+
+  <!-- BOTTOM: tagline + url -->
+  <text x="600" y="600" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Inter, Helvetica, Arial" font-weight="700" font-size="36" fill="#ffffff" letter-spacing="-1.1">Same size. <tspan fill="#fffb00">Different math.</tspan></text>
+  <text x="600" y="638" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#ffffff" fill-opacity="0.45" letter-spacing="0.5">squircle-ui.pages.dev</text>
+</svg>
