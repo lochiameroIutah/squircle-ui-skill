@@ -15,6 +15,10 @@
   A Claude Code skill that makes <a href="https://squircle.js.org"><code>@squircle-js/react</code></a> the default for rounded UI in React, replacing <code>border-radius</code> and Tailwind's <code>rounded-*</code>.
 </p>
 
+<p align="center">
+  <a href="https://squircle-ui.pages.dev"><b>Live demo →</b></a>
+</p>
+
 ## Install
 
 One liner with the [`skills`](https://github.com/vercel-labs/skills) CLI by Vercel:
