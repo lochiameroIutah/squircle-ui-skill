@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/lochiameroIutah/squircle-ui-skill/main/banner.svg" alt="squircle-ui banner" width="100%">
+  <img src="https://raw.githubusercontent.com/themattvision/squircle-ui-skill/main/banner.svg" alt="squircle-ui banner" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://github.com/lochiameroIutah/squircle-ui-skill/releases"><img alt="version" src="https://img.shields.io/github/v/release/lochiameroIutah/squircle-ui-skill?style=flat-square&label=version&color=fffb00&labelColor=14141a"></a>
+  <a href="https://github.com/themattvision/squircle-ui-skill/releases"><img alt="version" src="https://img.shields.io/github/v/release/themattvision/squircle-ui-skill?style=flat-square&label=version&color=fffb00&labelColor=14141a"></a>
   <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-black?style=flat-square"></a>
   <a href="https://github.com/anthropics/claude-code"><img alt="claude code" src="https://img.shields.io/badge/Claude%20Code-skill-black?style=flat-square"></a>
   <a href="https://squircle.js.org"><img alt="squircle-js" src="https://img.shields.io/badge/built%20on-%40squircle--js%2Freact-fffb00?style=flat-square&labelColor=14141a"></a>
@@ -20,7 +20,7 @@
 One liner with the [`skills`](https://github.com/vercel-labs/skills) CLI by Vercel:
 
 ```bash
-npx skills add lochiameroIutah/squircle-ui-skill -a claude-code -g
+npx skills add themattvision/squircle-ui-skill -a claude-code -g
 ```
 
 That drops the skill into `~/.claude/skills/squircle-ui`, available globally to Claude Code. Drop `-g` to install only inside the current project (`./.claude/skills/`).
@@ -30,7 +30,7 @@ Or clone manually:
 ```bash
 mkdir -p ~/.claude/skills
 cd ~/.claude/skills
-git clone https://github.com/lochiameroIutah/squircle-ui-skill.git squircle-ui
+git clone https://github.com/themattvision/squircle-ui-skill.git squircle-ui
 ```
 
 Claude Code auto discovers the skill from that point on.
