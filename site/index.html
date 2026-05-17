@@ -312,7 +312,9 @@
 
     .app-icon-inner.sq { /* clip-path applied per-element by JS */ }
 
-    .app-icon-inner.rounded {
+    /* Class is `is-rounded`, NOT `rounded`. Tailwind CDN claims `.rounded` as
+       a utility (border-radius: 0.25rem = 4px) that would override our 22.5%. */
+    .app-icon-inner.is-rounded {
       clip-path: none !important;
     }
 
@@ -1506,7 +1508,7 @@
         positionIndicator(btnSquircle);
         iconInners.forEach(el => {
           el.classList.add("sq");
-          el.classList.remove("rounded");
+          el.classList.remove("is-rounded");
           if (squircleReady && el.dataset.sqId) {
             el.style.clipPath = `url(#${el.dataset.sqId})`;
           }
@@ -1519,7 +1521,7 @@
         positionIndicator(btnRounded);
         iconInners.forEach(el => {
           el.classList.remove("sq");
-          el.classList.add("rounded");
+          el.classList.add("is-rounded");
           el.style.clipPath = "none";
         });
       }
