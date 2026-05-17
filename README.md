@@ -85,16 +85,13 @@ export function Button({ children, onClick }) {
 
 The skill activates when your prompt contains triggers like "squircle", "iOS style", "Apple feel". To make it the default even when you only say "build me a card", add a personal memory file under `~/.claude/projects/<your-project>/memory/` instructing Claude to invoke it instead of `rounded-*`.
 
-## Roadmap
+## Built on
 
-- [ ] Live demo site at `squircle-ui.dev`.
-- [ ] Companion skills (iOS motion, Apple style design tokens).
-- [ ] CodeSandbox playground linked from each pattern.
-- [ ] Optional Tailwind plugin that resolves `rounded-*` to squircle automatically.
+This skill is a wrapper of opinions on top of [`@squircle-js/react`](https://squircle.js.org), the library that does the actual math. All credit for the rendering goes to that project. squircle-ui exists to make Claude use it correctly and consistently in place of `rounded-*`.
 
 ## Author
 
-Made by **Matteo Zampieri**, creator [@themattvision](https://www.youtube.com/@themattvision).
+Made by **Matteo Zampieri**, creator [@themattvision](https://instagram.com/themattvision) on Instagram.
 
 If you ship something built with this skill, I would love to see it.
 
