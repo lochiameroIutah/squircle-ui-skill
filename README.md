@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/themattvision/squircle-ui-skill/main/banner.png" alt="squircle-ui banner: a river-polished stone shaped like a squircle next to a sharp CSS box" width="100%">
+  <img src="https://raw.githubusercontent.com/themattvision/squircle-ui-skill/main/banner-photo.png" alt="squircle-ui banner: a river-polished stone shaped like a squircle next to a sharp CSS box" width="100%">
 </p>
 
 <p align="center">
