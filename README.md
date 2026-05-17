@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/lochiameroIutah/squircle-ui-skill/releases"><img alt="version" src="https://img.shields.io/github/v/release/lochiameroIutah/squircle-ui-skill?style=flat-square&label=version&color=7c5cff"></a>
+  <a href="https://github.com/lochiameroIutah/squircle-ui-skill/releases"><img alt="version" src="https://img.shields.io/github/v/release/lochiameroIutah/squircle-ui-skill?style=flat-square&label=version&color=fffb00&labelColor=14141a"></a>
   <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-black?style=flat-square"></a>
   <a href="https://github.com/anthropics/claude-code"><img alt="claude code" src="https://img.shields.io/badge/Claude%20Code-skill-black?style=flat-square"></a>
-  <a href="https://squircle.js.org"><img alt="squircle-js" src="https://img.shields.io/badge/built%20on-%40squircle--js%2Freact-7c5cff?style=flat-square"></a>
+  <a href="https://squircle.js.org"><img alt="squircle-js" src="https://img.shields.io/badge/built%20on-%40squircle--js%2Freact-fffb00?style=flat-square&labelColor=14141a"></a>
 </p>
 
 <h1 align="center">squircle-ui</h1>
